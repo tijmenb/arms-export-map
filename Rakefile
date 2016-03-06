@@ -21,7 +21,7 @@ task :default do
       date: Date.parse([year, month, day].join('/')),
       countries: target_countries,
       amount: row['waarde (€)'].to_i,
-      description: row['goederen omschrijving'],
+      description: row['goederen omschrijving'].strip,
     }
   end
 
