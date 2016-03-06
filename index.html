@@ -4,8 +4,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
-  <script src="/js/datamaps.world.min.js"></script>
-  <script src="/js/utils.js"></script>
+  <script src="js/datamaps.world.min.js"></script>
+  <script src="js/utils.js"></script>
 </head>
 <body>
   <style media="screen">
@@ -42,7 +42,7 @@
 
   var popupTemplate = Handlebars.compile($('#popup-template').html());
 
-  $.getJSON('/data/countries.json', function(data) {
+  $.getJSON('data/countries.json', function(data) {
     var arcLines = [];
 
     Object.keys(data).forEach(function(country_code) {
