@@ -9,15 +9,35 @@
 </head>
 <body>
   <style media="screen">
-    body { background-color: #3B8183; }
+    body {
+      background-color: #3B8183;
+      font-family: Helvetica, Arial;
+    }
+
     .hoverinfo {
       font-size: 10px;
     }
+
     .hoverinfo td {
       font-size: 10px;
     }
+
+    a.github-link {
+      color: #fff;
+      position: absolute;
+      z-index: 1;
+      right: 10px;
+    }
+
+    #map {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
   </style>
-  <div id="map" style="position: relative; width: 100%; height: 100%;"></div>
+
+  <a href='https://github.com/tijmenb/arms-export-map' class='github-link'>Project on GitHub</a>
+  <div id="map"></div>
 
   <script type="text/template" id="popup-template">
     <div class='hoverinfo'>
@@ -36,10 +56,7 @@
   </script>
 
   <script>
-  var paletteScale = d3.scale.linear()
-        .domain([0, 10])
-        .range(["#FFF", "#F38630"]);
-
+  var paletteScale = d3.scale.linear().domain([0, 10]).range(["#FFF", "#F38630"]);
   var popupTemplate = Handlebars.compile($('#popup-template').html());
 
   $.getJSON('data/countries.json', function(data) {
