@@ -1,0 +1,52 @@
+<html>
+<head>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+  <script src="/js/datamaps.world.min.js"></script>
+  <script src="/js/utils.js"></script>
+</head>
+<body>
+  <style media="screen">
+    body { background-color: #3B8183; }
+  </style>
+  <div id="map" style="position: relative; width: 100%; height: 100%;"></div>
+  <script>
+  var paletteScale = d3.scale.linear()
+        .domain([0, 10])
+        .range(["#FFF", "#F38630"]);
+
+  $.getJSON('/data/countries.json', function(data) {
+    var arcLines = [];
+
+    Object.keys(data).forEach(function(country_code) {
+      if (data[country_code].count > 0) {
+        arcLines.push({ origin: 'NLD', destination: country_code})
+        data[country_code].fillColor = paletteScale(data[country_code].count);
+      } else {
+        data[country_code].fillColor = '#FFF';
+      }
+    })
+
+    var map = new Datamap({
+      element: document.getElementById("map"),
+      scope: 'world',
+      data: data,
+      geographyConfig: {
+        popupTemplate: function(geo, data) {
+          return ['<div class="hoverinfo"><strong>' + geo.properties.name + '</strong><br/>',
+                  'Number of licences: ' + data.count + '<br/>',
+                  'Export: ' + euro(data.total_amount) + '<br/>',
+                  '</div>'].join('');
+        },
+      },
+      arcConfig: {
+        strokeColor: '#FF9900',
+      }
+    });
+
+    map.arc(arcLines)
+  })
+  </script>
+</body>
+</html>
