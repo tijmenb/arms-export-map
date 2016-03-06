@@ -1,4 +1,4 @@
-function euro(number) {
+Handlebars.registerHelper('euro', function(number) {
   var numberStr = parseFloat(number).toFixed(2).toString();
   numberStr = numberStr.substring(0, numberStr.length-3);
   var numFormat = new Array;
@@ -8,4 +8,4 @@ function euro(number) {
   }
   numFormat.unshift(numberStr);
   return 'EUR ' + numFormat.join('.');
-}
+});

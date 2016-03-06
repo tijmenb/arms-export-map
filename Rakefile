@@ -41,7 +41,7 @@ task :countries => [:default] do
   countries = {}
 
   country_names.each do |cid|
-    countries[cid] = { count: 0, total_amount: 0 }
+    countries[cid] = { count: 0, total_amount: 0, top_exports: {} }
   end
 
   data.each do |entry|
@@ -50,6 +50,13 @@ task :countries => [:default] do
 
     countries[country][:count] += 1
     countries[country][:total_amount] += entry['amount']
+
+    countries[country][:top_exports][entry['description']] ||= 0
+    countries[country][:top_exports][entry['description']] =+ entry['amount']
+  end
+
+  countries.each do |iso, data|
+    data[:top_exports] = Hash[data[:top_exports].sort_by(&:last).reverse]
   end
 
   File.open("data/countries.json", "w") do |f|
